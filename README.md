@@ -14,6 +14,14 @@
   <img alt="Docker" src="https://img.shields.io/badge/Docker-compose-2496ED?logo=docker&logoColor=white" />
 </p>
 
+<p align="center">
+  <a href="https://agendai-matheus.vercel.app"><strong>Acessar o Agendaí online</strong></a> ·
+  <a href="https://agendai-matheus.vercel.app/b/navalha-de-ouro">Ver uma página de agendamento</a> ·
+  <a href="https://agendai-matheus-api.vercel.app/docs">Documentação da API</a>
+</p>
+
+> Para testar o painel, clique em **Entrar** e depois em **Entrar na conta de demonstração**.
+
 ![Página inicial](docs/screenshots/landing.png)
 
 ## Sobre o projeto
@@ -74,7 +82,7 @@ O **Agendaí** resolve isso com duas partes:
 | Banco de dados | PostgreSQL em produção, SQLite em desenvolvimento |
 | Front-end | React 19, Vite, React Router, Day.js, CSS puro com design tokens |
 | Testes | Pytest (regras de negócio e testes de API ponta a ponta) |
-| Infra | Docker, Docker Compose, Nginx, GitHub Actions (CI) |
+| Infra | Vercel (site e API), Neon (PostgreSQL), Docker, GitHub Actions (CI) |
 
 ## Arquitetura
 
