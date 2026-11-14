@@ -6,6 +6,8 @@ PyJWT>=2.8
 bcrypt>=4.1
 python-dotenv>=1.0
 tzdata>=2024.1
+# Driver do PostgreSQL (produção). No Windows o projeto usa SQLite e não precisa dele.
+psycopg[binary]>=3.1; sys_platform != "win32"
 
 # testes
 pytest>=8.0
