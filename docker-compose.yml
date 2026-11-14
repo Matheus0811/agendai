@@ -1,0 +1,38 @@
+# Sobe o projeto inteiro com um comando:  docker compose up --build
+# Front-end: http://localhost:8080   API: http://localhost:8000/docs
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: agendai
+      POSTGRES_PASSWORD: agendai
+      POSTGRES_DB: agendai
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agendai"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://agendai:agendai@db:5432/agendai
+      SECRET_KEY: troque-esta-chave-em-producao-com-pelo-menos-32-caracteres
+      CORS_ORIGINS: http://localhost:8080
+      SEED_DEMO: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  web:
+    build: ./frontend
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+volumes:
+  pgdata:

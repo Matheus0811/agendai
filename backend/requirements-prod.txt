@@ -1,0 +1,3 @@
+# Dependências extras para produção (PostgreSQL)
+-r requirements.txt
+psycopg[binary]>=3.1
