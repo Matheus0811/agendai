@@ -227,7 +227,7 @@ A documentação interativa completa fica em `/docs` (Swagger).
 
 ## Autor
 
-Feito por **Matheus**, estudante de Análise e Desenvolvimento de Sistemas.
+Feito por **Matheus Galvão**, estudante de Análise e Desenvolvimento de Sistemas.
 
-- LinkedIn: _adicione seu link aqui_
-- GitHub: _adicione seu link aqui_
+- LinkedIn: [linkedin.com/in/matheus-galvão-460612292](https://www.linkedin.com/in/matheus-galv%C3%A3o-460612292)
+- GitHub: [github.com/Matheus0811](https://github.com/Matheus0811)
