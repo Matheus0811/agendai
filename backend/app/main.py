@@ -1,4 +1,5 @@
 """Ponto de entrada da API do Agendaí."""
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, FastAPI
@@ -14,9 +15,12 @@ from app.routers import appointments, auth, business, catalog, customers, dashbo
 async def lifespan(_: FastAPI):
     Base.metadata.create_all(bind=engine)
     if settings.seed_demo:
-        from app.seed import seed_if_empty
+        from app.seed import refresh_demo_if_needed
 
-        seed_if_empty()
+        try:
+            refresh_demo_if_needed()
+        except Exception:  # outra instância pode estar recriando a demo ao mesmo tempo
+            logging.getLogger("agendai").exception("Não foi possível renovar a demo")
     yield
 
 
