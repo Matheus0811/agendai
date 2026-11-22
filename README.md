@@ -184,6 +184,9 @@ Front-end em http://localhost:8080 e documentação da API em http://localhost:8
 
 Na tela de login também existe o botão **Entrar na conta de demonstração**.
 
+No site publicado, a demonstração é recriada a cada 24 horas: a agenda da semana e o faturamento
+acompanham o dia de hoje, e o que visitantes alteraram volta ao original.
+
 ## Testes
 
 ```bash
@@ -193,7 +196,8 @@ pytest -v
 
 Os testes cobrem o cálculo de horários (duração, almoço, passado, bloqueios) e o fluxo completo pela
 API: cadastro, login, serviço, agendamento, conflito de horário, cancelamento, bloqueios e isolamento
-entre negócios. O GitHub Actions roda os testes e o build do front a cada push.
+entre negócios, além da renovação diária da conta de demonstração. O GitHub Actions roda os testes e o build
+do front a cada push.
 
 ## Principais rotas da API
 
@@ -229,5 +233,5 @@ A documentação interativa completa fica em `/docs` (Swagger).
 
 Feito por **Matheus Galvão**, estudante de Análise e Desenvolvimento de Sistemas.
 
-- LinkedIn: [linkedin.com/in/matheus-galvão-460612292](https://www.linkedin.com/in/matheus-galv%C3%A3o-460612292)
+- LinkedIn: [linkedin.com/in/matheus-galvao](https://www.linkedin.com/in/matheus-galvao)
 - GitHub: [github.com/Matheus0811](https://github.com/Matheus0811)
