@@ -5,7 +5,7 @@ Login da demo:  demo@agendai.com / demo123
 Página pública: http://localhost:5173/b/navalha-de-ouro
 """
 import random
-from datetime import datetime, time, timedelta
+from datetime import datetime, time, timedelta, timezone
 
 from sqlalchemy import select
 
@@ -18,6 +18,9 @@ from app.utils import default_hours
 
 DEMO_EMAIL = "demo@agendai.com"
 DEMO_PASSWORD = "demo123"
+# A demo se renova a cada 24 horas: a agenda da semana e o faturamento acompanham
+# o dia de hoje, e o que visitantes mudaram some.
+DEMO_MAX_AGE = timedelta(hours=24)
 
 SERVICES = [
     ("Corte masculino", "Corte na tesoura ou máquina, com lavagem e finalização.", 45, 4500),
@@ -64,7 +67,7 @@ def run() -> None:
                 db.delete(existing.business)
                 db.flush()
             db.delete(existing)
-            db.commit()
+            db.flush()  # apagar e recriar na mesma transação: a demo nunca fica fora do ar
 
         user = User(name="Rafael Souza", email=DEMO_EMAIL, password_hash=hash_password(DEMO_PASSWORD))
         business = Business(
@@ -176,12 +179,15 @@ def run() -> None:
         db.close()
 
 
-def seed_if_empty() -> None:
-    """Cria a demo só se ela ainda não existir (usado ao subir com SEED_DEMO=true)."""
+def refresh_demo_if_needed() -> None:
+    """Cria a demo se ela não existir, ou recria se tiver mais de 24 horas (usado ao subir com SEED_DEMO=true)."""
     Base.metadata.create_all(bind=engine)
     with SessionLocal() as db:
-        exists = db.scalar(select(User.id).where(User.email == DEMO_EMAIL))
-    if exists is None:
+        created_at = db.scalar(select(User.created_at).where(User.email == DEMO_EMAIL))
+    if created_at is not None and created_at.tzinfo is not None:
+        created_at = created_at.astimezone(timezone.utc).replace(tzinfo=None)
+    now_utc = datetime.now(timezone.utc).replace(tzinfo=None)
+    if created_at is None or now_utc - created_at > DEMO_MAX_AGE:
         run()
 
 
